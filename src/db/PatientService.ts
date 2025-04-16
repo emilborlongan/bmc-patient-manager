@@ -1,0 +1,16 @@
+import { db } from "./db";
+import { Patient } from "../types/Patient";
+
+export const PatientService = {
+  async getAll(): Promise<Patient[]> {
+    return await db.patients.toArray();
+  },
+
+  async add(patient: Patient): Promise<void> {
+    await db.patients.add(patient);
+  },
+
+  async remove(id: string): Promise<void> {
+    await db.patients.delete(id);
+  },
+};

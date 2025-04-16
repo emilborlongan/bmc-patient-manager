@@ -1,0 +1,27 @@
+.pfContainer {
+    background-color: '#7f7f7f';
+    height: 70%;
+}
+
+.pfForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.pfInputFields {
+    flex: 0;
+    font-size: 24px;
+    padding: 10px 0px;
+    margin: 10px 10px;
+    width: 70%;
+    background-color: aliceblue;
+    color: black;
+    border-radius: 8px;
+    text-indent: 10px;
+}
+
+.pfSubmitButton {
+    width: 10%;
+    padding: 10px 0px;
+    margin: 10px 10px;
+}
