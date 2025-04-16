@@ -18,8 +18,8 @@ export default function App() {
       {loggedIn ? (
         <Route element={<Layout />}>
           <Route path="/welcome" element={<Landing />} />
-          <Route path="/add" element={<PatientApp view="add" />} />
-          <Route path="/list" element={<PatientApp view="list" />} />
+          <Route path="/add" element={<PatientApp />} />
+          <Route path="/list" element={<PatientApp />} />
         </Route>
       ) : (
         // If not logged in, redirect all protected routes back to login

@@ -1,4 +1,3 @@
-import React from "react";
 import Modal, { ModalAction } from "../Modal";
 
 interface ConfirmModalProps {
