@@ -1,3 +1,4 @@
+// src/db/db.ts
 import Dexie, { Table } from "dexie";
 import { Patient } from "../types/Patient";
 
@@ -7,7 +8,8 @@ export class PatientDB extends Dexie {
   constructor() {
     super("PatientDatabase");
     this.version(1).stores({
-      patients: "id, name, age, diagnosis",
+      // include checkupDate in the index if you like
+      patients: "id, name, address, age, gender, diagnosis, checkupDate",
     });
   }
 }

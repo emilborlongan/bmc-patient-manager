@@ -1,4 +1,5 @@
 import { useState } from "react";
+import BMCicon from '../assets/BMC_icon.png'
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
@@ -25,7 +26,7 @@ export default function Layout() {
                     borderBottom: "1px solid #ddd",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "space-between", // 👈 stays as is
+                    justifyContent: "space-between",
                     padding: "0 1rem",
                     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
                 }}
@@ -40,7 +41,7 @@ export default function Layout() {
                         color: "blue"
                     }}
                 >
-                    <span role="img" aria-label="logo">🏥</span>
+                    <span role="img" aria-label="logo"><img src={BMCicon} width={40} height={40} alt="bmc" /></span>
                     Borlongan Medical Clinic
                 </div>
 
@@ -94,7 +95,7 @@ export default function Layout() {
                         gap: "1rem",
                     }}
                 >
-                    <NavItem to="/add" icon="➕" label="New Patient" collapsed={collapsed} active={pathname === "/add"} />
+                    <NavItem to="/welcome" icon="🏠" label="Home" collapsed={collapsed} active={pathname === "/welcome"} />
                     <NavItem to="/list" icon="📋" label="Patients" collapsed={collapsed} active={pathname === "/list"} />
                 </aside>
 

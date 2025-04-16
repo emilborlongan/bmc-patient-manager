@@ -25,3 +25,11 @@
     padding: 10px 0px;
     margin: 10px 10px;
 }
+
+.pfCancelButton {
+    background: #ccc;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
