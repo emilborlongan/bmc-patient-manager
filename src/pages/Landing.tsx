@@ -5,8 +5,8 @@ export default function Landing() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <div style={{ marginBottom: "2rem"}}>
-        <img src={homelogo} width={2250} height={550} alt="bmc" />
+      <div style={{ marginBottom: "2rem" }}>
+        <img src={homelogo} style={{ width: '100%', height: 'auto' }} alt="bmc" />
       </div>
     </div>
   );
