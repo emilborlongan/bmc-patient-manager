@@ -42,7 +42,7 @@ export default function Layout() {
                     }}
                 >
                     <span role="img" aria-label="logo"><img src={BMCicon} width={40} height={40} alt="bmc" /></span>
-                    Merceditas Borlongan Clinic
+                    Dr. Merceditas Borlongan
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>

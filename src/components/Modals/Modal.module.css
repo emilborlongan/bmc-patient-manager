@@ -1,40 +1,63 @@
 .overlay {
-    position: fixed; top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.4);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 1000;
-  }
-  .modal {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    max-width: 360px; width: 90%;
-    text-align: center;
-  }
-  .title {
-    margin: 0 0 1rem;
-    color: black;
-  }
-  .message {
-    margin: 0 0 1.5rem;
-    font-size: 1rem;
-    color: black;
-  }
-  .buttonRow {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 0.5rem;
-  }
-  .primaryBtn {
-    background-color: #1976d2; color: white;
-    border: none; padding: 0.5rem 1rem; border-radius: 6px;
-    cursor: pointer;
-  }
-  .secondaryBtn {
-    background-color: #e0e0e0; color: black;
-    border: none; padding: 0.5rem 1rem; border-radius: 6px;
-    cursor: pointer;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.inputModal {
+  max-width: 800px !important;
+  width: 50% !important;
+  text-align: initial !important;
+}
+
+.modal {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 1rem;
+  color: black;
+}
+
+.message {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  color: black;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+}
+
+.primaryBtn {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.secondaryBtn {
+  background-color: #e0e0e0;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}

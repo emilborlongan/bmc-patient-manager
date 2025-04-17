@@ -21,7 +21,7 @@
 }
 
 .pfSubmitButton {
-    width: 10%;
+    width: 40%;
     padding: 10px 0px;
     margin: 10px 10px;
 }
@@ -32,4 +32,43 @@
     padding: 0.5rem 1rem;
     border-radius: 6px;
     cursor: pointer;
-  }
+    height: 45px;
+}
+
+.pfFlexInputfields {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: black;
+}
+
+.pfInputLabels {
+    width: 120px;
+    margin-right: 0.5rem;
+    text-align: right;
+    font-weight: 500;
+}
+
+.pfInputFields {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+
+    font-size: 24px;
+    margin: 10px 10px;
+    width: 70%;
+    background-color: aliceblue;
+    color: black;
+    border-radius: 8px;
+    text-indent: 10px;
+}
+
+.pfInputFieldsContainer {
+    flex: 1;
+}
+
+.textarea {
+    flex: 1;
+    min-height: 80px;
+    resize: vertical;
+}
