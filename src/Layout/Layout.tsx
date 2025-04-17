@@ -91,6 +91,7 @@ export default function Layout() {
                 >
                     <NavItem to="/welcome" icon="🏠" label="Home" collapsed={collapsed} active={pathname === "/welcome"} />
                     <NavItem to="/list" icon="📋" label="Patients" collapsed={collapsed} active={pathname === "/list"} />
+                    <NavItem to="/medcert" icon="📜" label="Medical Certificate" collapsed={collapsed} active={pathname === "/medcert"} />
                 </aside>
 
 

@@ -5,11 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import styles from "./PatientForm.module.css";
 
 interface Props {
-  /** Patient to edit; omit for “add” mode */
   initial?: Patient;
-  /** Called with the new/updated patient */
   onSave: (patient: Patient) => void;
-  /** Optional: if provided, shows a Cancel button */
   onCancel?: () => void;
 }
 

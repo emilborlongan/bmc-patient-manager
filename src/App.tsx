@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import PatientApp from "./pages/PatientDisplay";
-import Home from "./pages/Home";
+import Login from "./pages/Login";
 import { useAuth } from "./auth/useAuth";
 import Landing from "./pages/Landing";
 
@@ -11,7 +11,7 @@ export default function App() {
   return (
     <Routes>
       {/* Public Route (Login Page) */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Login />} />
 
 
       {/* Protected Routes */}
