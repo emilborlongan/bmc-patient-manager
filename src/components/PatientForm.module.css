@@ -1,6 +1,6 @@
 .pfContainer {
     background-color: '#7f7f7f';
-    height: 70%;
+    height: 70%;    
 }
 
 .pfForm {
@@ -24,6 +24,7 @@
     width: 40%;
     padding: 10px 0px;
     margin: 10px 10px;
+    background-color: #1976d2;
 }
 
 .pfCancelButton {
@@ -46,7 +47,8 @@
     width: 120px;
     margin-right: 0.5rem;
     text-align: right;
-    font-weight: 500;
+    font-weight: 600;
+    font-family: sans-serif;
 }
 
 .pfInputFields {

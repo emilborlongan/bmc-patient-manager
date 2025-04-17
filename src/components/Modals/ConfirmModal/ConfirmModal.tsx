@@ -7,9 +7,9 @@ interface ConfirmModalProps {
 }
 
 export default function ConfirmModal({ isOpen, onConfirm, onCancel }: ConfirmModalProps) {
-  const actions: ModalAction[] = [
-    { label: "Cancel", onClick: onCancel, styleType: "secondary" },
+  const actions: ModalAction[] = [    
     { label: "Confirm", onClick: onConfirm, styleType: "primary" },
+    { label: "Cancel", onClick: onCancel, styleType: "secondary" },
   ];
 
   return (

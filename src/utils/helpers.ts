@@ -1,4 +1,3 @@
-// Optional: you can move this to utils if needed
 export const sortBy = <T, K extends keyof T>(data: T[], key: K, asc: boolean) => {
     return [...data].sort((a, b) => {
         if (typeof a[key] === "number") {

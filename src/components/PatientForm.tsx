@@ -154,7 +154,7 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
 
 
         <div className={styles.pfFlexInputfields}>
-          <div className={styles.pfInputLabels}>checkupDate: </div>
+          <div className={styles.pfInputLabels}>Check-up Date: </div>
           <div style={{width: '35%'}}>
             <input
               className={styles.pfInputFields}
