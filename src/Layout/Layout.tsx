@@ -3,6 +3,7 @@ import BMCicon from '../assets/BMC_icon.png'
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import Clock from "../components/Clock/Clock";
 
 export default function Layout() {
     const { pathname } = useLocation();
@@ -46,21 +47,14 @@ export default function Layout() {
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    {/* Collapse Button */}
+                    <Clock />                      {/* ← current date & time */}
                     <button
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: "1.2rem",
-                            background: "none",
-                            border: "none",
-                            cursor: "pointer",
-                        }}
+                        onClick={() => setCollapsed((c) => !c)}
+                        style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem" }}
                         title="Toggle sidebar"
                     >
                         {collapsed ? "➡️" : "⬅️"}
                     </button>
-
-                    {/* Logout Button */}
                     <button
                         onClick={handleLogout}
                         style={{
