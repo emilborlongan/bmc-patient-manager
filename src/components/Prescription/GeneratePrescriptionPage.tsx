@@ -28,15 +28,12 @@ const GeneratePrescriptionPage: React.FC = () => {
     const [meds, setMeds] = useState<Medication[]>([]);
 
     useEffect(() => {
-        // 1) guard: if no patientId, navigate away and exit
         if (!patientId) {
             navigate("/list");
-            return;       // ← returns void, not a promise
+            return;
         }
 
-        // 2) define your async loader
         async function loadData(): Promise<void> {
-            // 1) load patient
             const allPatients = await PatientService.getAll();
             const p = allPatients.find((x) => x.id === patientId);
             if (!p) {
@@ -45,7 +42,6 @@ const GeneratePrescriptionPage: React.FC = () => {
             }
             setPatient(p);
 
-            // 2) load prescriptions
             const allPres = await PrescriptionService.getAll();
             const theirs = allPres
                 .filter((pr) => pr.patientId === patientId)
@@ -57,7 +53,6 @@ const GeneratePrescriptionPage: React.FC = () => {
             }
             setPrescription(pres);
 
-            // 3) load medications
             const allMeds = await MedicationService.getAll();
             setMeds(
                 allMeds.filter((m) =>
@@ -67,7 +62,6 @@ const GeneratePrescriptionPage: React.FC = () => {
             setLoading(false);
         }
 
-        // 3) kick it off—but crucially, do not *return* its promise
         loadData();
     }, [patientId, navigate]);
 

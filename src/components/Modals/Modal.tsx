@@ -3,7 +3,6 @@ import styles from "./Modal.module.css";
 export interface ModalAction {
   label: string;
   onClick: () => void;
-  /** "primary" | "secondary" to pick styling */
   styleType?: "primary" | "secondary";
 }
 

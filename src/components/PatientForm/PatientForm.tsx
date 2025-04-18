@@ -25,7 +25,6 @@ interface Props {
 }
 
 export default function PatientForm({ initial, onSave, onCancel }: Props) {
-  // form state
   const empty = {
     name: "",
     address: "",
@@ -60,11 +59,9 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         checkupDate: initial.checkupDate,
       });
 
-      // load existing prescription for this patient
       PrescriptionService.getAll().then((list) => {
         const pres = list.find((p) => p.patientId === initial.id);
         if (pres) {
-          // build selectedMeds with quantities
           const items = pres.items.map((it) => {
             const med = allMeds.find((m) => m.id === it.medicationId)!;
             return { ...med, quantity: it.quantity };
@@ -181,7 +178,6 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         )}
       />
 
-      {/* Quantity inputs */}
       {selectedMeds.map((m) => (
         <TextField
           key={m.id}

@@ -1,4 +1,3 @@
-// src/pages/MedicationListPage.tsx
 import { useEffect, useState } from "react";
 import {
   DataGrid, GridColDef, GridPaginationModel
@@ -87,7 +86,6 @@ export default function MedicationListPage() {
         />
       </Box>
 
-      {/* Add/Edit Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="sm">
         <DialogTitle>{editing ? "Edit Medication" : "Add Medication"}</DialogTitle>
         <DialogContent>
@@ -99,7 +97,6 @@ export default function MedicationListPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Confirm Delete */}
       <Dialog open={!!confirmId} onClose={() => setConfirmId(null)}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>Are you sure you want to delete this Medication?</DialogContent>
@@ -109,7 +106,6 @@ export default function MedicationListPage() {
         </DialogActions>
       </Dialog>
 
-      {/* Success Snackbar‐style Dialog */}
       <Dialog open={!!showSuccess} onClose={() => setShowSuccess(null)}>
         <DialogTitle>
           {showSuccess === "add" && "Added"}

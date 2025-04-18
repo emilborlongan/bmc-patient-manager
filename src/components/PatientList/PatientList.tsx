@@ -1,4 +1,3 @@
-// src/pages/PatientListPage.tsx
 import { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
@@ -95,7 +94,6 @@ export default function PatientListPage() {
         />
       </div>
 
-      {/* Confirm‑delete dialog */}
       <Dialog open={!!deleteId} onClose={() => setDeleteId(null)}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
@@ -119,7 +117,6 @@ export default function PatientListPage() {
         </DialogActions>
       </Dialog>
 
-      {/* Success‑delete dialog */}
       <Dialog
         open={showDeleteSuccess}
         onClose={() => setShowDeleteSuccess(false)}

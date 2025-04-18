@@ -1,4 +1,3 @@
-// src/components/Layout.tsx
 import React, { useState, useRef } from "react";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { db } from "../db/db";
@@ -48,7 +47,6 @@ export default function Layout() {
         { to: "/medcert", label: "Medical Certificate", icon: <DescriptionIcon /> },
     ];
 
-    // Data menu handlers
     const openDataMenu = (e: React.MouseEvent<HTMLElement>) => setDataMenuAnchor(e.currentTarget);
     const closeDataMenu = () => setDataMenuAnchor(null);
 

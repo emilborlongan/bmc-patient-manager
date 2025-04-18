@@ -8,7 +8,6 @@ export default function Clock() {
     return () => clearInterval(timer);
   }, []);
 
-  // Format however you like. Here's a locale-based example:
   const dateStr = now.toLocaleDateString(undefined, {
     weekday: "short",
     month: "short",

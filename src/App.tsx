@@ -45,7 +45,7 @@ export default function App() {
         </>
       )}
 
-      {/* Catch-all */}
+      {/* Catch-all unknown routes */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
