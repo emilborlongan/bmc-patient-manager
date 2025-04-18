@@ -21,7 +21,7 @@ export class PatientDB extends Dexie {
     this.version(3).stores({
       patients: "id, name, address, age, gender, complaint, assessment, findings, checkupDate",
       medications: "id, name, brandName",
-      prescriptions: "id, patientId, *medicationIds, date",
+      prescriptions: "id, patientId, date, *items.medicationId",
     });
   }
 }

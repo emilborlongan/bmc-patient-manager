@@ -14,6 +14,10 @@ import { Medication } from "../../types/Medication";
 import { MedicationService } from "../../db/MedicationService";
 import { Prescription } from "../../types/Prescription";
 
+interface SelectedMed extends Medication {
+  quantity: number;
+}
+
 interface Props {
   initial?: Patient;
   onSave: (patient: Patient, prescription: Prescription) => void;
@@ -35,7 +39,7 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
   const [form, setForm] = useState(empty);
 
   const [allMeds, setAllMeds] = useState<Medication[]>([]);
-  const [selectedMeds, setSelectedMeds] = useState<Medication[]>([]);
+  const [selectedMeds, setSelectedMeds] = useState<SelectedMed[]>([]);
 
   const [medError, setMedError] = useState(false);
 
@@ -57,12 +61,15 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
       });
 
       // load existing prescription for this patient
-      PrescriptionService.getAll().then((presList) => {
-        const pres = presList.find((p) => p.patientId === initial.id);
+      PrescriptionService.getAll().then((list) => {
+        const pres = list.find((p) => p.patientId === initial.id);
         if (pres) {
-          setSelectedMeds(
-            allMeds.filter((m) => pres.medicationIds.includes(m.id))
-          );
+          // build selectedMeds with quantities
+          const items = pres.items.map((it) => {
+            const med = allMeds.find((m) => m.id === it.medicationId)!;
+            return { ...med, quantity: it.quantity };
+          });
+          setSelectedMeds(items);
         }
       });
     } else {
@@ -98,14 +105,17 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
       return;
     }
 
+    const items = selectedMeds.map((m) => ({
+      medicationId: m.id,
+      quantity: m.quantity,
+    }));
     const prescription = {
       id: uuidv4(),
       patientId: patient.id,
-      medicationIds: selectedMeds.map((m) => m.id),
       date: new Date().toISOString(),
+      items,
       notes: "",
     };
-
     onSave(patient, prescription);
   };
 
@@ -151,22 +161,45 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         options={allMeds}
         getOptionLabel={(m) => m.name + (m.brandName ? ` (${m.brandName})` : "")}
         value={selectedMeds}
-        onChange={
-          (_, v) => {
-            setSelectedMeds(v);
-            if (v.length > 0) setMedError(false);
-          }
-        }
+        onChange={(_, meds) => {
+          // preserve quantities for meds already selected
+          const merged = meds.map((m) => {
+            const prev = selectedMeds.find((x) => x.id === m.id);
+            return { ...m, quantity: prev?.quantity ?? 1 };
+          });
+          setSelectedMeds(merged);
+          if (merged.length > 0) setMedError(false);
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Medications"
-            placeholder="Search and select…"
-            error={medError}
-            helperText={medError ? "Select at least one medication" : ""}
+            error={medError && selectedMeds.length === 0}
+            helperText={medError && "Please select meds & quantities"}
+            placeholder="Search…"
           />
         )}
       />
+
+      {/* Quantity inputs */}
+      {selectedMeds.map((m, i) => (
+        <TextField
+          key={m.id}
+          label={`${m.name} Quantity`}
+          type="number"
+          value={m.quantity}
+          onChange={(e) => {
+            const q = parseInt(e.target.value, 10) || 0;
+            setSelectedMeds((prev) =>
+              prev.map((x) =>
+                x.id === m.id ? { ...x, quantity: q } : x
+              )
+            );
+          }}
+          inputProps={{ min: 1 }}
+          required
+        />
+      ))}
 
       <TextField
         name="complaint"

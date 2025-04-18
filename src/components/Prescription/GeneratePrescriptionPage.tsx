@@ -59,8 +59,11 @@ const GeneratePrescriptionPage: React.FC = () => {
 
             // 3) load medications
             const allMeds = await MedicationService.getAll();
-            setMeds(allMeds.filter((m) => pres.medicationIds.includes(m.id)));
-
+            setMeds(
+                allMeds.filter((m) =>
+                    pres.items.some((it) => it.medicationId === m.id)
+                )
+            );
             setLoading(false);
         }
 
@@ -91,7 +94,7 @@ const GeneratePrescriptionPage: React.FC = () => {
             <Box
                 id="print-area"
                 sx={{
-                    height:    "90%", 
+                    height: "90%",
                     maxWidth: 800,
                     mx: "auto",
                     my: 2,
@@ -178,12 +181,15 @@ const GeneratePrescriptionPage: React.FC = () => {
 
                     {/* Medications list */}
                     <Box sx={{ ml: 2 }}>
-                        {meds.map((m, i) => (
-                            <Typography key={m.id} variant="body2" sx={{ mb: 1 }}>
-                                {i + 1}. {m.name}
-                                {m.brandName && ` (${m.brandName})`}
-                            </Typography>
-                        ))}
+                        {prescription.items.map((it, i) => {
+                            const med = meds.find((m) => m.id === it.medicationId)!;
+                            return (
+                                <Typography key={it.medicationId} variant="body2" sx={{ mb: 1 }}>
+                                    {i + 1}. {med.name}
+                                    {med.brandName ? ` (${med.brandName})` : ""} — Qty: {it.quantity}
+                                </Typography>
+                            );
+                        })}
                     </Box>
                 </Box>
             </Box>

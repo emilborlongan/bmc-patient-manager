@@ -1,7 +1,12 @@
+
 export interface Prescription {
   id: string;
   patientId: string;
-  medicationIds: string[];
   date: string;
   notes?: string;
+
+  items: Array<{
+    medicationId: string;
+    quantity: number;
+  }>;
 }
