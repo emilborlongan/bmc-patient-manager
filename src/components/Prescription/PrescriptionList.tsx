@@ -9,7 +9,6 @@ import {
   DialogActions, Box
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useNavigate } from "react-router-dom";
 import { Prescription } from "../../types/Prescription";
 import { PrescriptionService } from "../../db/PrescriptionService";
 import PrescriptionForm from "./PrescriptionForm";
@@ -21,7 +20,6 @@ export default function PrescriptionListPage() {
   const [editing, setEditing] = useState<Prescription | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState<"add"|"update"|"delete"|null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => void refresh(), []);
 
