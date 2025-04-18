@@ -182,7 +182,7 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
       />
 
       {/* Quantity inputs */}
-      {selectedMeds.map((m, i) => (
+      {selectedMeds.map((m) => (
         <TextField
           key={m.id}
           label={`${m.name} Quantity`}
