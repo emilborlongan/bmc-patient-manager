@@ -4,7 +4,9 @@ export interface Patient {
     age: number;
     gender: string;
     address: string;
-    diagnosis: string;
-    prescription: string;
+    complaint: string;
+    findings: string;
+    assessment: string;
+    prescriptionId?: string;
     checkupDate: string;
   }

@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
-import PatientList from "../components/PatientList";
-import PatientForm from "../components/PatientForm";
+import PatientList from "../components/PatientList/PatientList";
+import PatientForm from "../components/PatientForm/PatientForm";
 import FormModal from "../components/Modals/FormModal";
 import Modal from "../components/Modals/Modal";
 import { Patient } from "../types/Patient";
 import { PatientService } from "../db/PatientService";
+import { useNavigate } from "react-router-dom";
+
 
 export default function PatientApp() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Patient | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-
   const [successAction, setSuccessAction] = useState<"add" | "update" | null>(null);
+  const navigate = useNavigate();
+  
+
 
   useEffect(() => {
     refresh();
@@ -22,7 +26,8 @@ export default function PatientApp() {
 
   const openAdd = () => {
     setEditing(null);
-    setModalOpen(true);
+    navigate("/add");
+    return null;
   };
 
   const openEdit = (p: Patient) => {
@@ -51,23 +56,8 @@ export default function PatientApp() {
 
   return (
     <>
-      <div style={{ marginBottom: "1rem", textAlign: "right" }}>
-        <button
-          onClick={openAdd}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            backgroundColor: "#4caf50",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          ➕ Add New Patient Entry
-        </button>
-      </div>
 
-      <PatientList patients={patients} onDelete={handleDelete} onEdit={openEdit} />
+      <PatientList />
 
       {/* Form modal for both Add & Edit */}
       <FormModal
