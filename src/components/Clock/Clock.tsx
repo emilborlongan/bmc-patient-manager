@@ -21,7 +21,7 @@ export default function Clock() {
   });
 
   return (
-    <div style={{ fontSize: "0.9rem", fontFamily: "monospace", whiteSpace: "nowrap", color: "black" }}>
+    <div style={{ fontSize: "0.9rem", fontFamily: "monospace", whiteSpace: "nowrap", color: "white", fontWeight: 600 }}>
       {dateStr} {timeStr}
     </div>
   );

@@ -30,7 +30,7 @@ export default function PatientListPage() {
     { field: "findings", headerName: "Findings", flex: 1.5 },
     {
       field: "checkupDate",
-      headerName: "Next Checkup",
+      headerName: "Last Checkup",
       type: "date",
       width: 150,
       valueGetter: (params) =>
