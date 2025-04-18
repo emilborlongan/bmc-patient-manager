@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Prescription } from "../../types/Prescription";
 import { TextField, Button, Stack } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   initial?: Prescription;
@@ -26,7 +27,7 @@ export default function PrescriptionForm({ initial, onSave, onCancel }: Props) {
     e.preventDefault();
     if (!form.name.trim()) return;
     onSave({
-      id: initial?.id ?? crypto.randomUUID(),
+      id: initial?.id ?? uuidv4(),
       name: form.name.trim(),
       brandName: form.brandName.trim() || undefined,
     });
