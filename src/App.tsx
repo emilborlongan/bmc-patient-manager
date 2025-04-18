@@ -5,7 +5,8 @@ import Login from "./pages/Login";
 import { useAuth } from "./auth/useAuth";
 import Landing from "./pages/Landing";
 import PatientFormPage from "./components/PatientForm/PatientFormPage";
-import PrescriptionListPage from "./components/Prescription/PrescriptionList";
+import MedicationListPage from "./components/Medication/MedicationList";
+import GeneratePrescriptionPage from "./components/Prescription/GeneratePrescriptionPage";
 
 export default function App() {
   const { loggedIn } = useAuth();
@@ -23,7 +24,11 @@ export default function App() {
           <Route path="/add" element={<PatientFormPage mode="add" />} />
           <Route path="/edit/:id" element={<PatientFormPage mode="edit" />} />
           <Route path="/list" element={<PatientApp />} />
-          <Route path="/prescriptions" element={<PrescriptionListPage />} />
+          <Route path="/medication" element={<MedicationListPage />} />
+          <Route
+            path="/prescriptions/generate/:patientId"
+            element={<GeneratePrescriptionPage />}
+          />
         </Route>
       ) : (
         // If not logged in, redirect all protected routes back to login
@@ -32,7 +37,11 @@ export default function App() {
           <Route path="/add" element={<Navigate to="/" />} />
           <Route path="/edit/:id" element={<Navigate to="/" />} />
           <Route path="/list" element={<Navigate to="/" />} />
-          <Route path="/prescriptions" element={<Navigate to="/" />} />
+          <Route path="/medication" element={<Navigate to="/" />} />
+          <Route
+            path="/prescriptions/generate/:patientId"
+            element={<Navigate to="/" />}
+          />
         </>
       )}
 

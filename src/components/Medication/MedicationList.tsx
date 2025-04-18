@@ -1,4 +1,4 @@
-// src/pages/PrescriptionListPage.tsx
+// src/pages/MedicationListPage.tsx
 import { useEffect, useState } from "react";
 import {
   DataGrid, GridColDef, GridPaginationModel
@@ -9,28 +9,28 @@ import {
   DialogActions, Box
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Prescription } from "../../types/Prescription";
-import { PrescriptionService } from "../../db/PrescriptionService";
-import PrescriptionForm from "./PrescriptionForm";
+import { Medication } from "../../types/Medication";
+import { MedicationService } from "../../db/MedicationService";
+import MedicationForm from "./MedicationForm";
 
-export default function PrescriptionListPage() {
-  const [items, setItems] = useState<Prescription[]>([]);
+export default function MedicationListPage() {
+  const [items, setItems] = useState<Medication[]>([]);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({ page: 0, pageSize: 10 });
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editing, setEditing] = useState<Prescription | null>(null);
+  const [editing, setEditing] = useState<Medication | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState<"add"|"update"|"delete"|null>(null);
 
   useEffect(() => void refresh(), []);
 
-  const refresh = () => PrescriptionService.getAll().then(setItems);
+  const refresh = () => MedicationService.getAll().then(setItems);
 
-  const handleSave = async (p: Prescription) => {
+  const handleSave = async (p: Medication) => {
     if (editing) {
-      await PrescriptionService.update(p);
+      await MedicationService.update(p);
       setShowSuccess("update");
     } else {
-      await PrescriptionService.add(p);
+      await MedicationService.add(p);
       setShowSuccess("add");
     }
     setDialogOpen(false);
@@ -39,7 +39,7 @@ export default function PrescriptionListPage() {
   };
 
   const handleDelete = async (id: string) => {
-    await PrescriptionService.remove(id);
+    await MedicationService.remove(id);
     setConfirmId(null);
     setShowSuccess("delete");
     refresh();
@@ -52,7 +52,7 @@ export default function PrescriptionListPage() {
       field: "actions", headerName: "Actions", width: 180, sortable: false,
       renderCell: (params) => (
         <Box>
-          <Button size="small" onClick={() => { setEditing(params.row as Prescription); setDialogOpen(true); }}>
+          <Button size="small" onClick={() => { setEditing(params.row as Medication); setDialogOpen(true); }}>
             Edit
           </Button>
           <Button size="small" color="error" onClick={() => setConfirmId(params.id as string)}>
@@ -65,7 +65,7 @@ export default function PrescriptionListPage() {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>Prescriptions</Typography>
+      <Typography variant="h4" gutterBottom>Medications</Typography>
 
       <Button
         variant="contained"
@@ -73,7 +73,7 @@ export default function PrescriptionListPage() {
         sx={{ mb: 2 }}
         onClick={() => { setEditing(null); setDialogOpen(true); }}
       >
-        Add Prescription
+        Add Medication
       </Button>
 
       <Box sx={{ height: 500, width: "100%" }}>
@@ -89,9 +89,9 @@ export default function PrescriptionListPage() {
 
       {/* Add/Edit Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editing ? "Edit Prescription" : "Add Prescription"}</DialogTitle>
+        <DialogTitle>{editing ? "Edit Medication" : "Add Medication"}</DialogTitle>
         <DialogContent>
-          <PrescriptionForm
+          <MedicationForm
             initial={editing ?? undefined}
             onSave={handleSave}
             onCancel={() => setDialogOpen(false)}
@@ -102,7 +102,7 @@ export default function PrescriptionListPage() {
       {/* Confirm Delete */}
       <Dialog open={!!confirmId} onClose={() => setConfirmId(null)}>
         <DialogTitle>Confirm Deletion</DialogTitle>
-        <DialogContent>Are you sure you want to delete this prescription?</DialogContent>
+        <DialogContent>Are you sure you want to delete this Medication?</DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmId(null)}>Cancel</Button>
           <Button color="error" onClick={() => handleDelete(confirmId!)}>Delete</Button>
@@ -117,7 +117,7 @@ export default function PrescriptionListPage() {
           {showSuccess === "delete" && "Deleted"}
         </DialogTitle>
         <DialogContent>
-          Prescription {showSuccess} successfully.
+          Medication {showSuccess} successfully.
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowSuccess(null)}>OK</Button>

@@ -44,7 +44,7 @@ export default function Layout() {
     const navItems = [
         { to: "/welcome", label: "Home", icon: <HomeIcon /> },
         { to: "/list", label: "Patients", icon: <ListIcon /> },
-        { to: "/prescriptions", label: "Prescriptions", icon: <LocalPharmacyIcon /> },
+        { to: "/medication", label: "Medication", icon: <LocalPharmacyIcon /> },
         { to: "/medcert", label: "Medical Certificate", icon: <DescriptionIcon /> },
     ];
 

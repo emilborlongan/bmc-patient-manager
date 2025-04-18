@@ -1,26 +1,27 @@
-// src/components/PatientForm.tsx
 import { useState, useEffect } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Patient } from "../../types/Patient";
-import { Prescription } from "../../types/Prescription";
 import { v4 as uuidv4 } from "uuid";
 import {
   TextField,
   Button,
   Stack,
   Autocomplete,
-  MenuItem,
+  MenuItem
 } from "@mui/material";
 import { PrescriptionService } from "../../db/PrescriptionService";
+import { Medication } from "../../types/Medication";
+import { MedicationService } from "../../db/MedicationService";
+import { Prescription } from "../../types/Prescription";
 
 interface Props {
   initial?: Patient;
-  onSave: (patient: Patient) => void;
+  onSave: (patient: Patient, prescription: Prescription) => void;
   onCancel?: () => void;
 }
 
 export default function PatientForm({ initial, onSave, onCancel }: Props) {
-  // include prescriptionId in form state
+  // form state
   const empty = {
     name: "",
     address: "",
@@ -30,17 +31,18 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
     assessment: "",
     findings: "",
     checkupDate: "",
-    prescriptionId: "",
   };
   const [form, setForm] = useState(empty);
-  const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
 
-  // load options
+  const [allMeds, setAllMeds] = useState<Medication[]>([]);
+  const [selectedMeds, setSelectedMeds] = useState<Medication[]>([]);
+
+  const [medError, setMedError] = useState(false);
+
   useEffect(() => {
-    PrescriptionService.getAll().then(setPrescriptions);
+    MedicationService.getAll().then(setAllMeds);
   }, []);
 
-  // populate when editing
   useEffect(() => {
     if (initial) {
       setForm({
@@ -52,12 +54,22 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         assessment: initial.assessment,
         findings: initial.findings,
         checkupDate: initial.checkupDate,
-        prescriptionId: initial.prescriptionId || "",
+      });
+
+      // load existing prescription for this patient
+      PrescriptionService.getAll().then((presList) => {
+        const pres = presList.find((p) => p.patientId === initial.id);
+        if (pres) {
+          setSelectedMeds(
+            allMeds.filter((m) => pres.medicationIds.includes(m.id))
+          );
+        }
       });
     } else {
       setForm(empty);
+      setSelectedMeds([]);
     }
-  }, [initial]);
+  }, [initial, allMeds]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -66,9 +78,9 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const p: Patient = {
+    const patient: Patient = {
       id: initial?.id ?? uuidv4(),
       name: form.name,
       address: form.address,
@@ -78,16 +90,47 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
       assessment: form.assessment,
       findings: form.findings,
       checkupDate: form.checkupDate,
-      prescriptionId: form.prescriptionId || undefined,
     };
-    onSave(p);
+
+
+    if (selectedMeds.length === 0) {
+      setMedError(true);
+      return;
+    }
+
+    const prescription = {
+      id: uuidv4(),
+      patientId: patient.id,
+      medicationIds: selectedMeds.map((m) => m.id),
+      date: new Date().toISOString(),
+      notes: "",
+    };
+
+    onSave(patient, prescription);
   };
 
   return (
-    <Stack component="form" spacing={2} onSubmit={handleSave}>
-      <TextField name="name" label="Name" value={form.name} onChange={handleChange} required />
-      <TextField name="address" label="Address" value={form.address} onChange={handleChange} />
-      <TextField name="age" label="Age" type="number" value={form.age} onChange={handleChange} />
+    <Stack component="form" spacing={2} onSubmit={handleSubmit}>
+      <TextField
+        name="name"
+        label="Name"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+      <TextField
+        name="address"
+        label="Address"
+        value={form.address}
+        onChange={handleChange}
+      />
+      <TextField
+        name="age"
+        label="Age"
+        type="number"
+        value={form.age}
+        onChange={handleChange}
+      />
       <TextField
         select
         name="gender"
@@ -103,21 +146,25 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         ))}
       </TextField>
 
-      {/* searchable dropdown */}
       <Autocomplete
-        options={prescriptions}
-        getOptionLabel={(opt) => opt.name}
-        value={
-          prescriptions.find((x) => x.id === form.prescriptionId) || null
-        }
-        onChange={(_, selected) =>
-          setForm((f) => ({
-            ...f,
-            prescriptionId: selected?.id ?? "",
-          }))
+        multiple
+        options={allMeds}
+        getOptionLabel={(m) => m.name + (m.brandName ? ` (${m.brandName})` : "")}
+        value={selectedMeds}
+        onChange={
+          (_, v) => {
+            setSelectedMeds(v);
+            if (v.length > 0) setMedError(false);
+          }
         }
         renderInput={(params) => (
-          <TextField {...params} label="Prescription" placeholder="Search…" />
+          <TextField
+            {...params}
+            label="Medications"
+            placeholder="Search and select…"
+            error={medError}
+            helperText={medError ? "Select at least one medication" : ""}
+          />
         )}
       />
 
@@ -130,6 +177,7 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         rows={3}
         required
       />
+
       <TextField
         name="assessment"
         label="Assessment"
@@ -139,6 +187,7 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         rows={3}
         required
       />
+
       <TextField
         name="findings"
         label="Findings"
@@ -171,7 +220,11 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
       />
 
       <Stack direction="row" spacing={2} justifyContent="flex-end">
-        {onCancel && <Button onClick={onCancel}>Cancel</Button>}
+        {onCancel && (
+          <Button variant="outlined" onClick={onCancel}>
+            Cancel
+          </Button>
+        )}
         <Button type="submit" variant="contained">
           {initial ? "Update Patient" : "Add Patient"}
         </Button>

@@ -1,12 +1,11 @@
 export interface Patient {
-    id: string;
-    name: string;
-    age: number;
-    gender: string;
-    address: string;
-    complaint: string;
-    findings: string;
-    assessment: string;
-    prescriptionId?: string;
-    checkupDate: string;
-  }
+  id: string;
+  name: string;
+  address: string;
+  age: number;
+  gender: string;
+  complaint: string;
+  assessment: string;
+  findings: string;
+  checkupDate: string;
+}

@@ -1,12 +1,11 @@
-// src/components/PrescriptionForm.tsx
 import { useState, useEffect } from "react";
-import { Prescription } from "../../types/Prescription";
 import { TextField, Button, Stack } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import { Medication } from "../../types/Medication";
 
 interface Props {
-  initial?: Prescription;
-  onSave: (item: Prescription) => void;
+  initial?: Medication;
+  onSave: (item: Medication) => void;
   onCancel?: () => void;
 }
 

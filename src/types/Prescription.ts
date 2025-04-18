@@ -1,6 +1,7 @@
 export interface Prescription {
-    id: string;
-    name: string;
-    brandName?: string;
-  }
-  
+  id: string;
+  patientId: string;
+  medicationIds: string[];
+  date: string;
+  notes?: string;
+}

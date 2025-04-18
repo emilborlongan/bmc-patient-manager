@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import { useNavigate } from "react-router-dom";
 import { Patient } from "../../types/Patient";
 import { PatientService } from "../../db/PatientService";
@@ -27,7 +28,6 @@ export default function PatientListPage() {
     { field: "name", headerName: "Name", flex: 1 },
     { field: "address", headerName: "Address", flex: 1.5 },
     { field: "age", headerName: "Age", type: "number", width: 100 },
-    { field: "findings", headerName: "Findings", flex: 1.5 },
     {
       field: "checkupDate",
       headerName: "Last Checkup",
@@ -39,7 +39,7 @@ export default function PatientListPage() {
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 300,
       sortable: false,
       renderCell: (params) => (
         <>
@@ -55,6 +55,14 @@ export default function PatientListPage() {
             onClick={() => setDeleteId(params.id as string)}
           >
             Delete
+          </Button>
+
+          <Button
+            size="small"
+            startIcon={<LocalPharmacyIcon />}
+            onClick={() => navigate(`/prescriptions/generate/${params.id}`)}
+          >
+            Rx
           </Button>
         </>
       ),
