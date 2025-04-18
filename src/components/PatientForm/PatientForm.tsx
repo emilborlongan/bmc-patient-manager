@@ -1,5 +1,6 @@
 // src/components/PatientForm.tsx
 import { useState, useEffect } from "react";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Patient } from "../../types/Patient";
 import { Prescription } from "../../types/Prescription";
 import { v4 as uuidv4 } from "uuid";
@@ -95,9 +96,9 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         onChange={handleChange}
         required
       >
-        {["male","female"].map((g) => (
+        {["male", "female"].map((g) => (
           <MenuItem key={g} value={g}>
-            {g.charAt(0).toUpperCase()+g.slice(1)}
+            {g.charAt(0).toUpperCase() + g.slice(1)}
           </MenuItem>
         ))}
       </TextField>
@@ -148,14 +149,25 @@ export default function PatientForm({ initial, onSave, onCancel }: Props) {
         required
       />
 
-      <TextField
-        name="checkupDate"
+      <DatePicker
         label="Checkup Date"
-        type="date"
-        value={form.checkupDate}
-        onChange={handleChange}
-        InputLabelProps={{ shrink: true }}
-        required
+        value={form.checkupDate ? new Date(form.checkupDate) : null}
+        onChange={(newDate) => {
+          setForm((f) => ({
+            ...f,
+            checkupDate: newDate
+              ? newDate.toISOString().split("T")[0]
+              : "",
+          }));
+        }}
+        slotProps={{
+          textField: {
+            name: "checkupDate",
+            fullWidth: true,
+            variant: "outlined",
+            margin: "normal",
+          },
+        }}
       />
 
       <Stack direction="row" spacing={2} justifyContent="flex-end">

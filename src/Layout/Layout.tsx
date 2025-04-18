@@ -100,7 +100,7 @@ export default function Layout() {
                         </IconButton>
                         <Box component="img" src={BMCicon} alt="BMC" sx={{ width: 32, height: 32 }} />
                         <Typography variant="h6" noWrap>
-                            Dr. Merceditas Borlongan
+                            Dr. Merceditas Borlongan
                         </Typography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
